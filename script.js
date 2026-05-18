@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, observerOptions);
 
     // Apply reveal to all sections and cards
-    const revealElements = document.querySelectorAll('section, .skill-card, .project-card, .glass');
+    const revealElements = document.querySelectorAll('section, .skill-card, .project-card, .glass:not(nav)');
     revealElements.forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
@@ -59,6 +59,36 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 link.style.color = 'var(--text-secondary)';
                 link.style.textShadow = 'none';
+            }
+        });
+    });
+
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('mobile-menu');
+    const navLinksContainer = document.querySelector('.nav-links');
+    
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            navLinksContainer.classList.toggle('active');
+            const icon = menuToggle.querySelector('i');
+            if (navLinksContainer.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+    }
+
+    // Close mobile menu on click
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (navLinksContainer.classList.contains('active')) {
+                navLinksContainer.classList.remove('active');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
             }
         });
     });
